@@ -5,8 +5,8 @@ import os
 
 app = Flask(__name__)
 
-# Read from environment or use default value
-FIREBASE_DB = os.environ.get('FIREBASE_DB', 'https://ecm3408-ca-ff1bd-default-rtdb.europe-west1.firebasedatabase.app/')
+# Read from environment variable
+FIREBASE_DB = os.environ.get('FIREBASE_DB')
 
 @app.route('/guardrails/<id>', methods=['PUT'])
 def create_guardrail(id):
