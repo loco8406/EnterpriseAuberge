@@ -1,3 +1,4 @@
+# Generated with GitHub Copilot (Claude Opus)
 from flask import Flask, request, jsonify
 import re
 import requests
@@ -5,8 +6,8 @@ import os
 
 app = Flask(__name__)
 
-# Read from environment variable
-FIREBASE_DB = os.environ.get('FIREBASE_DB')
+# Read from environment variable (strip trailing slash to avoid double slashes)
+FIREBASE_DB = os.environ.get('FIREBASE_DB', '').rstrip('/')
 
 @app.route('/guardrails/<id>', methods=['PUT'])
 def create_guardrail(id):
@@ -55,10 +56,15 @@ def get_all_guardrails():
 
 @app.route('/guardrails/<id>', methods=['DELETE'])
 def delete_guardrail(id):
+    # First check if resource exists
+    check = requests.get(f'{FIREBASE_DB}/guardrails/{id}.json')
+    if check.status_code != 200 or check.json() is None:
+        return jsonify({"error": "Not found"}), 404
+    
     response = requests.delete(f'{FIREBASE_DB}/guardrails/{id}.json')
     if response.status_code == 200:
         return "", 204
-    return jsonify({"error": "Not found"}), 404
+    return jsonify({"error": "Delete failed"}), 500
 
 if __name__ == '__main__':
     app.run(port=3001, debug=False)

@@ -44,3 +44,7 @@ Tests: LLM integration, guardrail CRUD, regex validation, full integration.
 ## Architecture
 
 Auberge → LLM + Guardrails → Firebase
+
+## AI Use Disclosure
+
+See [AI_DISCLOSURE.md](AI_DISCLOSURE.md) for full details.

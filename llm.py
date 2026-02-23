@@ -1,3 +1,4 @@
+# Generated with GitHub Copilot (Claude Opus)
 from flask import Flask, request, jsonify
 import requests
 import os
